@@ -187,7 +187,7 @@ export function FormDemo() {
         <form onSubmit={handleSubmit} className="w-full h-auto bg-white p-5 flex flex-col gap-3 rounded-lg">
             <HeaderElement header={header} />
 
-            <div className="space-y-4">
+            <div className="space-y-4 grid grid-cols-3">
                 {/* Nom complet */}
                 <Input
                     type="text"
@@ -291,6 +291,7 @@ export function FormDemo() {
                     name="themeColor"
                     presets={colorPresets}
                     showHex
+                    showRgb
                     value={themeColor}
                     onChange={(e) => setThemeColor(e.target.value)}
                 />
@@ -323,11 +324,13 @@ export function FormDemo() {
                     />
                     <ButtonUI
                         type="submit"
-                        state={isSubmitting ? "disabled" : "normal"}
+                        state={isSubmitting ? "loading" : "normal"}
+                        loadingText="Envoi en cours..."
+                        loadingType="spin"
                         icon={Save}
-                        text={isSubmitting ? "Envoi en cours..." : "Enregistrer"}
+                        text="Enregistrer"
                         textColor="text-white"
-                        width="w-30"
+                        width="w-auto"
                         bgColor="bg-black"
                         textSize="text-xs"
                         hoverBg="bg-amber-400"

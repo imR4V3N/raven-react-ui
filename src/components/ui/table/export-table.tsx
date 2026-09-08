@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {X, FileSpreadsheet, FileText, FileJson, File, Download} from "lucide-react";
+import {X, FileSpreadsheet, FileText, FileJson, Download, FileCode} from "lucide-react";
 import type {ExportFormat, ExportScope, ExportTableType} from "@/components/types/table/export-table-type.ts";
 import {ButtonUI} from "@/components/ui/button/button-ui.tsx";
 
@@ -73,7 +73,7 @@ export function ExportTable({
         { value: 'csv', label: 'CSV', icon: FileSpreadsheet },
         { value: 'excel', label: 'Excel', icon: FileSpreadsheet },
         { value: 'pdf', label: 'PDF', icon: FileText },
-        { value: 'xml', label: 'XML', icon: File },
+        { value: 'xml', label: 'XML', icon: FileCode },
         { value: 'json', label: 'JSON', icon: FileJson }
     ];
 
