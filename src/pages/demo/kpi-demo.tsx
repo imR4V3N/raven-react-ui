@@ -13,7 +13,7 @@ export function KpiDemo() {
     return (
         <div className="flex flex-col bg-white p-4 rounded-lg gap-3">
             <HeaderElement header={header} />
-            <div className="flex flex-row gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid md:grid-cols-3 md:grid-cols-4">
                 <KpiCard
                     title="PRIX × QUANTITÉ"
                     value={9}

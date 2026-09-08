@@ -19,6 +19,7 @@ import {
 import {FormDemo} from "@/pages/demo/form-demo.tsx";
 import {TableDemo} from "@/pages/demo/table-demo.tsx";
 import {KpiDemo} from "@/pages/demo/kpi-demo.tsx";
+import {ErrorDemo} from "@/pages/demo/error-demo.tsx";
 
 const MainPage = () => {
     const [logo] = useState<SidebarLogoType>({
@@ -203,7 +204,7 @@ const MainPage = () => {
     ]);
 
     const [profil] = useState<SidebarProfilType>({
-        name: "John Doe",
+        name: "Anne Marie",
         information: "Software Engineer",
         avatar: "/avatar.png"
     });
@@ -213,8 +214,10 @@ const MainPage = () => {
             <SidebarUI logo={logo} navigation={navigation} profil={profil} profilNavigation={profilNavigation} />
             <main className="bg-gray-200 p-3 w-full h-screen relative flex flex-col overflow-y-scroll gap-3">
                 <KpiDemo />
+                {/*<PopupDemo />*/}
                 <FormDemo />
                 <TableDemo />
+                <ErrorDemo />
             </main>
         </div>
     )

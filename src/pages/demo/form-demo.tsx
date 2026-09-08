@@ -187,7 +187,7 @@ export function FormDemo() {
         <form onSubmit={handleSubmit} className="w-full h-auto bg-white p-5 flex flex-col gap-3 rounded-lg">
             <HeaderElement header={header} />
 
-            <div className="space-y-4 grid grid-cols-3">
+            <div className="space-y-4 grid grid-cols-1 md:grid md:grid-cols-3">
                 {/* Nom complet */}
                 <Input
                     type="text"

@@ -24,7 +24,7 @@ export function SidebarProfilUI({ item, elements }: { item: SidebarProfilType; e
                             className="w-full h-full object-cover"
                         />
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-blue-500 text-white font-semibold">
+                        <div className="w-full h-full flex items-center justify-center bg-black text-white font-semibold">
                             {item.name.charAt(0).toUpperCase()}
                         </div>
                     )}
