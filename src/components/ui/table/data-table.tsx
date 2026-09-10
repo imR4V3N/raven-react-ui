@@ -4,8 +4,8 @@ import type {DataTableType} from "../../types/table/data-table-type.ts";
 import { TablePagination } from "./table-pagination";
 import {HeaderElement} from "@/components/ui/header/header-element.tsx";
 import type {ExportFormat, ExportScope} from "@/components/types/table/export-table-type.ts";
-import {ExportTable} from "@/components/ui/table/export-table.tsx";
-import {generateExportFile} from "@/components/services/file/export.ts";
+import {ExportTableMenu} from "@/components/ui/table/export-table-menu.tsx";
+import {generateExportFile} from "@/components/services/file/export-table.ts";
 
 export function DataTable({
                               columns,
@@ -207,7 +207,7 @@ export function DataTable({
 
             {/* Export Table */}
             {header && (
-                <ExportTable
+                <ExportTableMenu
                     isOpen={isExportModalOpen}
                     onClose={() => setIsExportModalOpen(false)}
                     onExport={handleExport}

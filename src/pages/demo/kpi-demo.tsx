@@ -1,10 +1,10 @@
 import {KpiCard} from "@/components/ui/dashboard/kpi-card.tsx";
-import {DollarSign, Euro, ChartArea, Package, User} from "lucide-react";
+import {DollarSign, Euro, Package, User, Table} from "lucide-react";
 import {HeaderElement} from "@/components/ui/header/header-element.tsx";
 
 export function KpiDemo() {
     const header = {
-        icon: ChartArea,
+        icon: Table,
         title: "KPIs",
         subtitle: "Vue d'ensemble des indicateurs clés de performance",
         isExpanded: false

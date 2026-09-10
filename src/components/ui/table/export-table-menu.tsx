@@ -3,7 +3,7 @@ import {X, FileSpreadsheet, FileText, FileJson, Download, FileCode} from "lucide
 import type {ExportFormat, ExportScope, ExportTableType} from "@/components/types/table/export-table-type.ts";
 import {ButtonUI} from "@/components/ui/button/button-ui.tsx";
 
-export function ExportTable({
+export function ExportTableMenu({
                                 isOpen,
                                 onClose,
                                 onExport,

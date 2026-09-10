@@ -21,6 +21,7 @@ import {TableDemo} from "@/pages/demo/table-demo.tsx";
 import {KpiDemo} from "@/pages/demo/kpi-demo.tsx";
 import {ErrorDemo} from "@/pages/demo/error-demo.tsx";
 import {OtpDemo} from "@/pages/demo/otp-demo.tsx";
+import {BarChartDemo} from "@/pages/demo/bar-chart-demo.tsx";
 
 const MainPage = () => {
     const [logo] = useState<SidebarLogoType>({
@@ -215,6 +216,7 @@ const MainPage = () => {
             <SidebarUI logo={logo} navigation={navigation} profil={profil} profilNavigation={profilNavigation} />
             <main className="bg-gray-200 p-3 w-full h-screen relative flex flex-col overflow-y-scroll gap-3">
                 <KpiDemo />
+                <BarChartDemo />
                 {/*<PopupDemo />*/}
                 <OtpDemo />
                 <FormDemo />
