@@ -54,7 +54,7 @@ export function PopupDemo() {
     };
 
     return(
-        <div className="p-8">
+        <div className="p-8 w-full flex items-center justify-center">
             <Popup
                 title="Navigation"
                 button={{
@@ -67,7 +67,7 @@ export function PopupDemo() {
                     textSize: 'text-sm'
                 }}
                 navigation={navigation}
-                direction="down"
+                direction="up-right"
                 onNavigate={handleNavigate}
             />
         </div>

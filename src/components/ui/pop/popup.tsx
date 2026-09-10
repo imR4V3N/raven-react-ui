@@ -8,7 +8,7 @@ export function Popup({
                           title,
                           button,
                           navigation,
-                          direction = 'right',
+                          direction = 'right-top',
                           isOpen: externalIsOpen,
                           onClose,
                           onNavigate,
@@ -86,16 +86,24 @@ export function Popup({
     // Rendre les positions du popup
     const getPositionClasses = () => {
         switch (direction) {
-            case 'left':
-                return 'right-full top-1/2 -translate-y-1/2 mr-2';
-            case 'right':
-                return 'left-full top-1/2 -translate-y-1/2 ml-2';
-            case 'up':
-                return 'bottom-full left-1/2 -translate-x-1/2 mb-2';
-            case 'down':
-                return 'top-full left-1/2 -translate-x-1/2 mt-2';
+            case 'left-top':
+                return 'right-full bottom-0 -translate-y-0 mr-2';
+            case 'left-bottom':
+                return 'right-full top-0 -translate-y-0 mr-2';
+            case 'right-top':
+                return 'left-full bottom-0 -translate-y-0 ml-2';
+            case 'right-bottom':
+                return 'left-full top-0 -translate-y-0 ml-2';
+            case 'up-left':
+                return 'bottom-full right-0 -translate-x-0 mb-2';
+            case 'up-right':
+                return 'bottom-full left-0 -translate-x-0 mb-2';
+            case 'down-left':
+                return 'top-full right-0 -translate-x-0 mt-2';
+            case 'down-right':
+                return 'top-full left-0 -translate-x-0 mt-2';
             default:
-                return 'left-full top-1/2 -translate-y-1/2 ml-2';
+                return 'left-full top-0 -translate-y-0 ml-2';
         }
     };
 
@@ -198,7 +206,7 @@ export function Popup({
                                     onClose();
                                 }
                             }}
-                            className="w-full text-xs text-gray-400 hover:text-gray-600 text-center py-1 transition-colors cursor-pointer"
+                            className="w-full text-xs text-gray-400 hover:text-red-600 text-center py-1 transition-colors cursor-pointer"
                         >
                             Fermer
                         </button>
