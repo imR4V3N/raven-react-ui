@@ -155,8 +155,10 @@ export function FormDemo() {
         // Reset succès après 3 secondes
         setTimeout(() => setSubmitSuccess(false), 3000);
 
-        toast.success('Formulaire soumis avec succès !');
 
+        if(submitSuccess) {
+            toast.success('Formulaire soumis avec succès !');
+        }
         // Optionnel : Reset du formulaire
         // resetForm();
     };
