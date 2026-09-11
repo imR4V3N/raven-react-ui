@@ -3,6 +3,8 @@ import { useLocation, Link } from "react-router-dom";
 import type { SidebarNavigationType } from "../../types/sidebar/sidebar-navigation-type";
 import { ChevronRight } from "lucide-react";
 
+const DEFAULT_COLOR = '#4B5563';
+
 interface SidebarNavigationUIProps {
     elements: SidebarNavigationType[];
     depth?: number;
@@ -117,7 +119,7 @@ function NavigationItem({ item, depth }: { item: SidebarNavigationType; depth: n
                 <span
                     className="flex-shrink-0"
                     style={{
-                        color: isActive ? 'white' : (item.color || "currentColor")
+                        color: isActive ? 'white' : (item.color || DEFAULT_COLOR)
                     }}
                 >
                     <item.icon className="w-4 h-4" />
@@ -236,7 +238,7 @@ function PopupItem({ item, level }: { item: SidebarNavigationType; level: number
                     <span
                         className="flex-shrink-0"
                         style={{
-                            color: isActive ? 'white' : (item.color || "currentColor")
+                            color: isActive ? 'white' : (item.color || DEFAULT_COLOR)
                         }}
                     >
                         <item.icon className="w-4 h-4" />
