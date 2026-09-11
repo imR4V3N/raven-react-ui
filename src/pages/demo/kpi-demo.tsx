@@ -15,7 +15,7 @@ export function KpiDemo() {
             <div className="grid grid-cols-1 gap-4 md:grid md:grid-cols-3 md:grid-cols-4">
                 <KpiCard
                     title="PRIX × QUANTITÉ"
-                    value={9}
+                    value={500000}
                     unit="Ar"
                     description="Valeur totale stock"
                     icon={DollarSign}
