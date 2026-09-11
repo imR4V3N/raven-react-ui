@@ -29,7 +29,6 @@ export function Input(input: InputType) {
                     `}
                     placeholder={input.placeholder}
                     type={input.type}
-                    required={input.isRequired}
                     minLength={input.minLength}
                     maxLength={input.maxLength}
                     value={input.value}

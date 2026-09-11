@@ -69,7 +69,6 @@ export function Textarea(item: TextareaType) {
                     onChange={handleChange}
                     placeholder={item.placeholder}
                     disabled={item.disabled}
-                    required={item.isRequired}
                     maxLength={item.maxLength}
                     minLength={item.minLength}
                     rows={item.rows || 2}

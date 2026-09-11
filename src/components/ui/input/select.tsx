@@ -267,7 +267,6 @@ export function Select(select: SelectType) {
                         ${select.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                         ${select.className}
                     `}
-                    required={select.isRequired}
                 >
                     {select.placeholder && (
                         <option value="" disabled>

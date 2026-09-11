@@ -8,7 +8,8 @@ import { InputFile } from '@/components/ui/input/input-file';
 import { Textarea } from '@/components/ui/input/textarea';
 import { InputColor } from '@/components/ui/input/input-color';
 import { ButtonUI } from '@/components/ui/button/button-ui';
-import {toast} from "sonner";
+import { useToaster } from '@/components/ui/toaster/toaster';
+// import {toast} from "sonner";
 import {HeaderElement} from "@/components/ui/header/header-element.tsx";
 
 interface FormErrors {
@@ -38,7 +39,8 @@ export function FormDemo() {
     // États pour les erreurs
     const [errors, setErrors] = useState<FormErrors>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const toast = useToaster();
+    const [_, setSubmitSuccess] = useState(false);
 
     // Options
     const poleOptions = [
@@ -156,11 +158,10 @@ export function FormDemo() {
         setTimeout(() => setSubmitSuccess(false), 3000);
 
 
-        if(submitSuccess) {
-            toast.success('Formulaire soumis avec succès !');
-        }
+        // if(submitSuccess) {
+        toast.success('Formulaire soumis avec succès !');
         // Optionnel : Reset du formulaire
-        // resetForm();
+        resetForm();
     };
 
     // Reset du formulaire
@@ -338,11 +339,6 @@ export function FormDemo() {
                         hoverText="text-black"
                     />
                 </div>
-
-                 {/*Affichage des erreurs globales */}
-                {Object.keys(errors).length > 0 && !isSubmitting && (
-                    toast.error("Veuillez corriger les erreurs ci-dessus")
-                )}
             </div>
         </form>
     );

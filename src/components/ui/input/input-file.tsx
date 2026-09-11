@@ -227,7 +227,6 @@ export function InputFile(item: InputFileType) {
                     id={item.id}
                     onChange={(e) => addFiles(e.target.files)}
                     disabled={item.disabled}
-                    required={item.isRequired}
                     multiple={item.type === 'multiple'}
                     accept={item.format?.map(f => `.${f.toLowerCase()}`).join(',')}
                     className="sr-only"

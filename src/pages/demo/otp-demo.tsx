@@ -2,9 +2,10 @@ import { useState } from "react";
 import { InputOtp } from "@/components/ui/input/input-otp.tsx";
 import { ButtonUI } from "@/components/ui/button/button-ui.tsx";
 import { Check, X } from "lucide-react";
-import {toast} from "sonner";
+import {useToaster} from "@/components/ui/toaster/toaster.tsx";
 
 export function OtpDemo() {
+    const toast = useToaster();
     const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
     const [error, setError] = useState<string[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);

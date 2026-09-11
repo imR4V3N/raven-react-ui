@@ -10,7 +10,7 @@ import {
     LogOut,
     LayoutDashboard,
     Radio,
-    Zap, Archive, Vote, MessageSquare, Camera, MonitorX
+    Zap, Archive, Vote, MessageSquare, Camera, MonitorX, Bell
 } from "lucide-react";
 import {Outlet} from "react-router-dom";
 
@@ -58,6 +58,12 @@ const MainPage = () => {
             title: "Tableau",
             link: "/table",
             icon: Table,
+            color: "#4B5563"
+        },
+        {
+            title: "Toaster",
+            link: "/toaster",
+            icon: Bell,
             color: "#4B5563"
         },
         {

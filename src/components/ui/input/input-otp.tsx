@@ -171,7 +171,6 @@ export function InputOtp(item: InputOtpType) {
                             value={char.toUpperCase()}
                             placeholder={item.placeholder}
                             disabled={item.disabled}
-                            required={item.isRequired && index === 0}
                             onChange={(e) => handleChange(index, e.target.value)}
                             onKeyDown={(e) => handleKeyDown(index, e)}
                             onPaste={handlePaste}

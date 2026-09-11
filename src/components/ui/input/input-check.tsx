@@ -65,7 +65,6 @@ export function InputCheck(item: InputCheckType) {
         checked={isCheckedState}
         onChange={handleChange}
         disabled={item.disabled}
-        required={item.isRequired}
         className="sr-only"
         />
         <div className={`
@@ -192,7 +191,6 @@ export function InputCheck(item: InputCheckType) {
                 }
             }}
             disabled={item.disabled}
-            required={item.isRequired}
             className="sr-only"
             />
             <div className={`
