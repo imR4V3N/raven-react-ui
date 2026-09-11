@@ -6,8 +6,7 @@ export function KpiDemo() {
     const header = {
         icon: Table,
         title: "KPIs",
-        subtitle: "Vue d'ensemble des indicateurs clés de performance",
-        isExpanded: false
+        subtitle: "Vue d'ensemble des indicateurs clés de performance"
     }
 
     return (

@@ -4,24 +4,15 @@ import type {SidebarLogoType} from "../components/types/sidebar/sidebar-logo-typ
 import type {SidebarNavigationType} from "../components/types/sidebar/sidebar-navigation-type";
 import type {SidebarProfilType} from "../components/types/sidebar/sidebar-profil-type";
 import {
+    Table,
+    BookOpenText,
     User,
     LogOut,
     LayoutDashboard,
-    Users,
-    FileText,
-    Calendar,
-    Megaphone,
-    DollarSign,
     Radio,
-    BarChart3, Info, ShoppingCart, Settings,
-    Zap, Archive, Vote, MessageSquare, Camera
+    Zap, Archive, Vote, MessageSquare, Camera, MonitorX
 } from "lucide-react";
-import {FormDemo} from "@/pages/demo/form-demo.tsx";
-import {TableDemo} from "@/pages/demo/table-demo.tsx";
-import {KpiDemo} from "@/pages/demo/kpi-demo.tsx";
-import {ErrorDemo} from "@/pages/demo/error-demo.tsx";
-import {OtpDemo} from "@/pages/demo/otp-demo.tsx";
-import {BarChartDemo} from "@/pages/demo/bar-chart-demo.tsx";
+import {Outlet} from "react-router-dom";
 
 const MainPage = () => {
     const [logo] = useState<SidebarLogoType>({
@@ -46,39 +37,27 @@ const MainPage = () => {
 
     const [navigation] = useState<SidebarNavigationType[]>([
         {
+            title: "Erreur",
+            link: "/",
+            icon: MonitorX,
+            color: "#4B5563"
+        },
+        {
             title: "Dashboard",
             link: "/dashboard",
             icon: LayoutDashboard,
             color: "#4B5563"
         },
         {
-            title: "Audience",
-            link: "/audience",
-            icon: Users,
+            title: "Formulaire",
+            link: "/form",
+            icon: BookOpenText,
             color: "#4B5563"
         },
         {
-            title: "Posts",
-            link: "/posts",
-            icon: FileText,
-            color: "#4B5563"
-        },
-        {
-            title: "Schedules",
-            link: "/schedules",
-            icon: Calendar,
-            color: "#4B5563"
-        },
-        {
-            title: "Income",
-            link: "/income",
-            icon: DollarSign,
-            color: "#4B5563"
-        },
-        {
-            title: "Promote",
-            link: "/promote",
-            icon: Megaphone,
+            title: "Tableau",
+            link: "/table",
+            icon: Table,
             color: "#4B5563"
         },
         {
@@ -155,53 +134,6 @@ const MainPage = () => {
                     ]
                 }
             ]
-        },
-        {
-            title: "Analytics",
-            link: "/analytics",
-            icon: BarChart3,
-            color: "#4B5563",
-            children: [
-                {
-                    title: "Informations générales",
-                    link: "/analytics/general",
-                    icon: Info
-                },
-                {
-                    title: "Détails de la vente",
-                    link: "/analytics/sales",
-                    icon: ShoppingCart,
-                    children: [
-                        {
-                            title: "Désignation",
-                            link: "/analytics/sales/designation"
-                        },
-                        {
-                            title: "Vente du 22/08/2026",
-                            link: "/analytics/sales/date"
-                        },
-                        {
-                            title: "Client *",
-                            link: "/analytics/sales/client"
-                        },
-                        {
-                            title: "Alice Martin · Paris",
-                            link: "/analytics/sales/client-detail"
-                        }
-                    ]
-                },
-                {
-                    title: "Options avancées",
-                    link: "/analytics/advanced",
-                    icon: Settings,
-                    children: [
-                        {
-                            title: "Paramètres additionnels",
-                            link: "/analytics/advanced/settings"
-                        }
-                    ]
-                }
-            ]
         }
     ]);
 
@@ -215,13 +147,7 @@ const MainPage = () => {
         <div className="flex w-screen h-screen relative">
             <SidebarUI logo={logo} navigation={navigation} profil={profil} profilNavigation={profilNavigation} />
             <main className="bg-gray-200 p-3 w-full h-screen relative flex flex-col overflow-y-scroll gap-3">
-                <KpiDemo />
-                <BarChartDemo />
-                {/*<PopupDemo />*/}
-                <OtpDemo />
-                <FormDemo />
-                <TableDemo />
-                <ErrorDemo />
+                <Outlet />
             </main>
         </div>
     )

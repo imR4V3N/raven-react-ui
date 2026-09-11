@@ -107,7 +107,6 @@ export function TableDemo() {
         icon: List,
         title: "Liste d'éléments",
         subtitle: "Gérez vos éléments ici",
-        isExpanded: false,
         isExportable: true
     };
 

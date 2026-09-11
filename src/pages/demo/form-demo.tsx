@@ -181,8 +181,7 @@ export function FormDemo() {
     const header = {
         icon: List,
         title: "Formulaire d'inscription",
-        subtitle: "Veuillez remplir tous les champs requis",
-        isExpanded: false
+        subtitle: "Veuillez remplir tous les champs requis"
     };
 
     return (

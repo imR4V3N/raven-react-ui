@@ -6,8 +6,7 @@ export function BarChartDemo() {
     const header = {
         icon: ChartBar,
         title: "Bar chart",
-        subtitle: "Visuel graphique de données.",
-        isExpanded: false
+        subtitle: "Visuel graphique de données."
     };
 
     const data_v = [

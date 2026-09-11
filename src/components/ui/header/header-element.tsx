@@ -2,7 +2,9 @@ import type {HeaderElementType} from "@/components/types/header/header-element-t
 import {ButtonUI} from "@/components/ui/button/button-ui.tsx";
 import {Download} from "lucide-react";
 
-export function HeaderElement({header, handleClick} : {header : HeaderElementType, handleClick?: () => void }) {
+export function HeaderElement({header, handleClick} : {
+                                                                    header : HeaderElementType,
+                                                                    handleClick?: () => void}) {
     return (
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white">
             <div className="flex items-center gap-3">

@@ -1,10 +1,54 @@
 import { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import type { SidebarNavigationType } from "../../types/sidebar/sidebar-navigation-type";
 import { ChevronRight } from "lucide-react";
 
 interface SidebarNavigationUIProps {
     elements: SidebarNavigationType[];
     depth?: number;
+}
+
+/**
+ * Vérifie si un lien est actif
+ * Gère les cas : correspondance exacte, sous-routes, et liens parents
+ */
+function isLinkActive(itemLink: string | undefined, currentPath: string): boolean {
+    if (!itemLink) return false;
+
+    // Nettoyer les trailing slashes
+    const cleanLink = itemLink.replace(/\/$/, '') || '/';
+    const cleanPath = currentPath.replace(/\/$/, '') || '/';
+
+    // Correspondance exacte
+    if (cleanLink === cleanPath) return true;
+
+    // Sous-route (ex: /users actif pour /users/123)
+    return cleanLink !== '/' && cleanPath.startsWith(cleanLink + '/');
+
+
+}
+
+/**
+ * Vérifie si un élément ou l'un de ses descendants est actif
+ */
+function isItemActive(item: SidebarNavigationType, currentPath: string): boolean {
+    // Vérifier le lien direct
+    if (isLinkActive(item.link, currentPath)) return true;
+
+    // Vérifier récursivement les enfants
+    if (item.children && item.children.length > 0) {
+        return item.children.some(child => isItemActive(child, currentPath));
+    }
+
+    return false;
+}
+
+/**
+ * Vérifie si un enfant exact est actif (pas un parent)
+ */
+function hasActiveChild(item: SidebarNavigationType, currentPath: string): boolean {
+    if (!item.children) return false;
+    return item.children.some(child => isItemActive(child, currentPath));
 }
 
 export function SidebarNavigationUI({ elements, depth = 0 }: SidebarNavigationUIProps) {
@@ -24,9 +68,16 @@ export function SidebarNavigationUI({ elements, depth = 0 }: SidebarNavigationUI
 }
 
 function NavigationItem({ item, depth }: { item: SidebarNavigationType; depth: number }) {
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
+
     const hasChildren = item.children && item.children.length > 0;
     const shouldShowPopup = hasChildren && depth >= 2;
+
+    const isActive = isLinkActive(item.link, location.pathname);
+    const isParentActive = hasActiveChild(item, location.pathname);
+
+    const shouldBeOpen = isOpen || isParentActive;
 
     const toggleOpen = () => {
         if (hasChildren) {
@@ -36,45 +87,81 @@ function NavigationItem({ item, depth }: { item: SidebarNavigationType; depth: n
 
     const paddingLeft = depth > 0 ? `${depth * 12 + 12}px` : "12px";
 
+    const activeClasses = isActive
+        ? 'bg-gray-900 text-white hover:bg-gray-800'
+        : isParentActive
+            ? 'text-gray-900 font-semibold hover:bg-gray-100'
+            : depth === 0
+                ? 'text-gray-700 hover:bg-gray-100'
+                : 'text-gray-600 hover:bg-gray-50';
+
+    const sharedClassName = `
+        flex items-center gap-2 px-3 py-2.5 rounded-lg 
+        text-sm font-medium transition-all duration-200
+        ${activeClasses}
+        ${hasChildren ? 'cursor-pointer' : ''}
+        group
+    `;
+
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (hasChildren) {
+            e.preventDefault();
+            toggleOpen();
+        }
+        item.onClick?.();
+    };
+
+    const content = (
+        <>
+            {item.icon && (
+                <span
+                    className="flex-shrink-0"
+                    style={{
+                        color: isActive ? 'white' : (item.color || "currentColor")
+                    }}
+                >
+                    <item.icon className="w-4 h-4" />
+                </span>
+            )}
+
+            <span className="flex-1 truncate">{item.title}</span>
+
+            {hasChildren && (
+                <ChevronRight
+                    className={`
+                        w-4 h-4 flex-shrink-0 transition-transform duration-200
+                        ${isActive ? 'text-white' : 'text-gray-400'}
+                        ${shouldBeOpen ? 'rotate-90' : ''}
+                    `}
+                />
+            )}
+        </>
+    );
+
     return (
         <li className="relative">
             <div className="relative">
-                <a
-                    href={item.link}
-                    className={`
-                        flex items-center gap-2 px-3 py-2.5 rounded-lg 
-                        text-sm font-medium transition-all duration-200
-                        ${depth === 0 ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-600 hover:bg-gray-50'}
-                        ${hasChildren ? 'cursor-pointer' : ''}
-                        group
-                    `}
-                    style={{ paddingLeft }}
-                    onClick={(e) => {
-                        if (hasChildren) {
-                            e.preventDefault();
-                            toggleOpen();
-                        }
-                    }}
-                >
-                    {item.icon && (
-                        <span className="flex-shrink-0" style={{ color: item.color || "currentColor" }}>
-                            <item.icon className="w-4 h-4" />
-                        </span>
-                    )}
+                {item.link && !hasChildren ? (
+                    <Link
+                        to={item.link}
+                        className={sharedClassName}
+                        style={{ paddingLeft }}
+                        onClick={handleClick}
+                    >
+                        {content}
+                    </Link>
+                ) : (
+                    <a
+                        href={item.link || '#'}
+                        className={sharedClassName}
+                        style={{ paddingLeft }}
+                        onClick={handleClick}
+                    >
+                        {content}
+                    </a>
+                )}
 
-                    <span className="flex-1 truncate">{item.title}</span>
-
-                    {hasChildren && (
-                        <ChevronRight
-                            className={`
-                                w-4 h-4 flex-shrink-0 text-gray-400 transition-transform duration-200
-                                ${isOpen ? 'rotate-90' : ''}
-                            `}
-                        />
-                    )}
-                </a>
-
-                {hasChildren && shouldShowPopup && isOpen && (
+                {hasChildren && shouldShowPopup && shouldBeOpen && (
                     <div className="absolute left-0 top-full mt-2 z-50 w-full md:left-0 md:top-full md:mt-2 md:min-w-[220px] md:w-auto">
                         <div className="bg-white rounded-lg shadow-lg border border-gray-200 py-2">
                             <div className="px-4 py-2 border-b border-gray-100">
@@ -93,7 +180,7 @@ function NavigationItem({ item, depth }: { item: SidebarNavigationType; depth: n
                 )}
             </div>
 
-            {hasChildren && !shouldShowPopup && isOpen && (
+            {hasChildren && !shouldShowPopup && shouldBeOpen && (
                 <div className="mt-1">
                     <SidebarNavigationUI elements={item.children!} depth={depth + 1} />
                 </div>
@@ -103,8 +190,14 @@ function NavigationItem({ item, depth }: { item: SidebarNavigationType; depth: n
 }
 
 function PopupItem({ item, level }: { item: SidebarNavigationType; level: number }) {
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
+
     const hasChildren = item.children && item.children.length > 0;
+
+    const isActive = isLinkActive(item.link, location.pathname);
+    const isParentActive = hasActiveChild(item, location.pathname);
+    const shouldBeOpen = isOpen || isParentActive;
 
     const toggleOpen = () => {
         if (hasChildren) {
@@ -112,12 +205,19 @@ function PopupItem({ item, level }: { item: SidebarNavigationType; level: number
         }
     };
 
+    const activeClasses = isActive
+        ? 'bg-gray-900 text-white hover:bg-gray-800'
+        : isParentActive
+            ? 'text-gray-900 font-semibold hover:bg-gray-50'
+            : 'text-gray-700 hover:bg-gray-50';
+
     return (
         <div>
             <a
-                href={item.link}
+                href={item.link || '#'}
                 className={`
-                    flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors 
+                    flex items-center gap-2 px-4 py-2 text-sm transition-colors 
+                    ${activeClasses}
                     ${hasChildren ? 'cursor-pointer' : ''}
                     ${level > 0 ? 'ml-4' : ''}
                 `}
@@ -129,10 +229,16 @@ function PopupItem({ item, level }: { item: SidebarNavigationType; level: number
                         e.preventDefault();
                         toggleOpen();
                     }
+                    item.onClick?.();
                 }}
             >
                 {item.icon && (
-                    <span className="flex-shrink-0" style={{ color: item.color || "currentColor" }}>
+                    <span
+                        className="flex-shrink-0"
+                        style={{
+                            color: isActive ? 'white' : (item.color || "currentColor")
+                        }}
+                    >
                         <item.icon className="w-4 h-4" />
                     </span>
                 )}
@@ -140,14 +246,15 @@ function PopupItem({ item, level }: { item: SidebarNavigationType; level: number
                 {hasChildren && (
                     <ChevronRight
                         className={`
-                            w-3.5 h-3.5 flex-shrink-0 text-gray-400 transition-transform duration-200
-                            ${isOpen ? 'rotate-90' : ''}
+                            w-3.5 h-3.5 flex-shrink-0 transition-transform duration-200
+                            ${isActive ? 'text-white' : 'text-gray-400'}
+                            ${shouldBeOpen ? 'rotate-90' : ''}
                         `}
                     />
                 )}
             </a>
 
-            {hasChildren && isOpen && (
+            {hasChildren && shouldBeOpen && (
                 <div className="relative">
                     <div>
                         {item.children!.map((child, idx) => (
